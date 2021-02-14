@@ -3,13 +3,10 @@ class Solution:
         res = ""
         
         def helper(l,r):
-            d = ""
             while l >= 0 and r < len(s) and s[l] == s[r]:
-                
-                d = s[l:r+1]
                 l-=1
                 r+=1
-            return d
+            return s[l+1:r]
         
         for i in range(len(s)):
             x = helper(i,i)
