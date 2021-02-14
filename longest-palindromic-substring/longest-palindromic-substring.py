@@ -1,25 +1,22 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        ans3 = ""
+        res = ""
         
-        def helper(left,right):
+        def helper(l,r):
             d = ""
-            while left >= 0 and right < len(s):
-                if s[left] != s[right]:
-                    break
-                if right-left >= len(d):
-                    d = s[left: right+1]
-                    
-                left -= 1
-                right += 1
-            return d
-
-        for i in range(len(s)):
-            ans1 =  helper(i,i)
-            ans2 =  helper(i, i+1)
-            if len(ans1) > len(ans2) and len(ans1) >= len(ans3):
-                ans3 = ans1
-            if len(ans2) > len(ans1) and len(ans2) >= len(ans3):
-                ans3 = ans2
+            while l >= 0 and r < len(s) and s[l] == s[r]:
                 
-        return ans3
+                d = s[l:r+1]
+                l-=1
+                r+=1
+            return d
+        
+        for i in range(len(s)):
+            x = helper(i,i)
+            y = helper(i,i+1)
+            
+            long = x if len(x) > len(y) else y
+            res = long if len(long)>len(res) else res
+        return res
+                
+                
