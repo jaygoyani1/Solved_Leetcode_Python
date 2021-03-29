@@ -10,17 +10,19 @@ class Solution:
         if not root:
             return []
         ans = []
-        q = [root]
+        q = deque([root])
         while q:
             n = len(q)
-            ans.append(q[0].val)
+            lvl = []
             for _ in range(n):
-                node = q.pop(0)
-                for child in [node.right, node.left]:
-                    if child:
+                node = q.popleft()
+                lvl.append(node.val)
+                for child in [node.right,node.left]:
+                    if child is not None:
                         q.append(child)
+            ans.append(lvl[0])
         return ans
-                        
+        
                         
         
         
