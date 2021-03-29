@@ -3,18 +3,14 @@ class Solution:
         color = image[sr][sc]
         if color == newColor:
             return image
-        lenx, leny = len(image), len(image[0])
-        
-        def dfs(r,c):
-            if r<0 or r>=lenx or c < 0 or c>= leny or image[r][c] != color:
+        def dfs(i,j):
+            if i<0 or i>=len(image) or j<0 or j>=len(image[0]) or image[i][j] != color:
                 return
+            image[i][j] = newColor
+            dfs(i+1,j)
+            dfs(i-1,j)
+            dfs(i,j+1)
+            dfs(i,j-1)
             
-            image[r][c] = newColor
-            dfs(r+1,c)
-            dfs(r-1,c)
-            dfs(r,c+1)
-            dfs(r,c-1)
-        
         dfs(sr,sc)
         return image
-        
