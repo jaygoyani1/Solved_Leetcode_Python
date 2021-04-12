@@ -2,25 +2,28 @@ class Solution:
     def trap(self, height: List[int]) -> int:
         if not height:
             return 0
-        l,r = 0,len(height)-1
-        maxl,maxr = height[l], height[r]
-        total = 0
-        while l<r:
-            maxl = max(maxl,height[l])
-            maxr = max(maxr, height[r])
-            if height[l]<=height[r]:
-                if height[l]<maxl:
-                    total+=min(maxl,maxr)-height[l]
-                l+=1
+        left = 0
+        right = len(height) -1 
+        maxl = height[left]
+        maxr = height[right]
+        
+        ans = 0
+        
+        while left<right:
+            
+            maxl = max(height[left],maxl)
+            maxr = max(height[right],maxr)
+            common = min(maxl,maxr)
+            
+            if height[left]< height[right]:
+                if height[left]<common:
+                    ans += common-height[left]
+                left+=1
             else:
-                if height[r]<maxr:
-                    total+=min(maxl,maxr)-height[r]
-                r-=1
-            
-        return total
+                if height[right]<common:
+                    ans += common-height[right]
+                right-=1
+        return ans
                 
-                
-    
-            
             
         
