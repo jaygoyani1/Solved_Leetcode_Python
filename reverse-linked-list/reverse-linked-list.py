@@ -7,14 +7,13 @@ class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         
         prev = None
-        curr = head
-            
+        curr =head
+        
         while curr:
-            
-            node = curr.next
+            temp = curr.next
             curr.next = prev
             prev = curr
-            curr = node
+            curr = temp
             
         return prev
         
