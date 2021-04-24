@@ -1,21 +1,16 @@
+import heapq
+from collections import defaultdict
 class Solution:
     def highFive(self, items: List[List[int]]) -> List[List[int]]:
+        res = []
+        students = defaultdict(list)
         
-        dic ={}
-        for item in items:
-            if item[0] in dic:
-                dic[item[0]].append(item[1])
-            else:
-                dic[item[0]] = [item[1]]
-        ans = []
+        for x,y in items:
+            heapq.heappush(students[x],-y)
         
-        def sort(list):
-            list = sorted(list,reverse=True)
-            return int(sum(list[0:5])/5)
-        
-        for item in dic:
-            ans.append([item,sort(dic[item])])
-        return sorted(ans)
-        
+        for student in students:
+            avg = sum(-heapq.heappop(students[student]) for x in range(0,5))//5
+            res.append((student,avg))
+        res.sort()
+        return res
             
-        
