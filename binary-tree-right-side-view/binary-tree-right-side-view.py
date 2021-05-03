@@ -10,19 +10,15 @@ class Solution:
         if not root:
             return []
         ans = []
-        q = deque([root])
-        while q:
-            n = len(q)
-            lvl = []
-            for _ in range(n):
-                node = q.popleft()
-                lvl.append(node.val)
-                for child in [node.right,node.left]:
-                    if child is not None:
-                        q.append(child)
-            ans.append(lvl[0])
-        return ans
         
+        def dfs(node,index):
+            if index == len(ans):
+                ans.append(node.val)
+            for child in [node.right,node.left]:
+                if child:
+                    dfs(child,index+1)
+        dfs(root,0)
+        return ans
                         
         
         
