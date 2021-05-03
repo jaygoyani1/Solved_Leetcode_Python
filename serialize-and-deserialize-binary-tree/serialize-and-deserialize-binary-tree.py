@@ -18,11 +18,11 @@ class Codec:
             if not node:
                 ans.append("null")
                 return
-            ans.append(node.val)
+            ans.append(str(node.val))
             dfs(node.left)
             dfs(node.right)
         dfs(root)
-        return ans
+        return " ".join(ans)
         
 
     def deserialize(self, data):
@@ -31,14 +31,18 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        if data[0] == "null":
-            del data[0]
-            return None
-        x = TreeNode(data[0])
-        del data[0]
-        x.left = self.deserialize(data)
-        x.right = self.deserialize(data)
-        return x
+        data1 = data.split(" ")
+        
+        def help(list1):
+            if list1[0] == "null":
+                del list1[0]
+                return None
+            x = TreeNode(list1[0])
+            del list1[0]
+            x.left = help(list1)
+            x.right = help(list1)
+            return x
+        return help(data1)
         
         
         
