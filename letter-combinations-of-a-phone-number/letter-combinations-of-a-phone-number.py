@@ -12,15 +12,21 @@ class Solution:
             '8': 'tuv',
             '9': 'wxyz',
         }
-        def backtrack(path,res,i):
-            if len(path) == len(digits):
-                res.append("".join(path))
+        
+        ans = []
+        def backtrack(comb,index):
+            if len(comb) == len(digits):
+                ans.append("".join(comb))
                 return
-            x = digits[i]
-            for l in KEYBOARD[x]:
-                path.append(l)
-                backtrack(path,res,i+1)
-                path.pop()
-        res = []
-        backtrack([],res,0)
-        return res
+            
+
+            word = KEYBOARD[digits[index]]
+            for i in word:
+                comb.append(i)
+                backtrack(comb,index+1)
+                comb.pop()
+                
+        backtrack([],0)
+        return ans
+                
+                
