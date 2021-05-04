@@ -1,15 +1,17 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        output = []
         
-        def backtrack(comb,i):
-            output.append(comb[:])
-            for j in range(i,len(nums)):
-                comb.append(nums[j])
-                backtrack(comb,j+1)
+        ans = []
+        
+        def backtrack(comb,j):
+            if len(comb) == len(nums):
+                ans.append(comb[:])
+                return
+            ans.append(comb[:])
+            
+            for i in range(j,len(nums)):
+                comb.append(nums[i])
+                backtrack(comb,i+1)
                 comb.pop()
-            return
-        
         backtrack([],0)
-        return output
-        
+        return ans
