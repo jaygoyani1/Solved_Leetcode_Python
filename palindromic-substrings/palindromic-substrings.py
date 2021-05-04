@@ -2,20 +2,19 @@ class Solution:
     def countSubstrings(self, s: str) -> int:
         ans = 0
         
-        def helper(left,right):
-            d = 0
-            while left >= 0 and right < len(s):
-                if s[left] != s[right]:
+        def find(start,end):
+            count = 0
+            while 0<=start and end <len(s):
+                if s[start] != s[end]:
                     break
-                left -= 1
-                right += 1
-                d += 1
-            return d
-
-        for i in range(len(s)):
-            ans += helper(i,i)
-            ans += helper(i, i+1)
+                start-=1
+                end+=1
+                count+=1
+            return count
         
+        for i in range(len(s)):
+            ans += find(i,i)
+            ans += find(i,i+1)
         return ans
             
                 
