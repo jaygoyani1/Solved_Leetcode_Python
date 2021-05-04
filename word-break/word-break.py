@@ -1,17 +1,22 @@
 class Solution:
     def wordBreak(self, s: str, words: List[str]) -> bool:
         memo = {}
-        def backtrack(i):
-            if i == len(s):
+
+        def backtrack(index):
+            if index in memo:
+                return memo[index]
+            if index == len(s):
                 return True
-            if i in memo:
-                return memo[i]
+            
             for w in words:
-                if s[i:].startswith(w):
-                    if backtrack(i+len(w)):
-                        memo[i] = True
+                if s[index:].startswith(w):
+                    if backtrack(index+len(w)):
+                        memo[index] = True
                         return True
-            memo[i] = False
+            memo[index] = False
             return False
-        return backtrack(0)
+                    
+            
         
+        return backtrack(0)
+            
