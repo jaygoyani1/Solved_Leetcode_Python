@@ -1,39 +1,28 @@
 from collections import defaultdict
-from enum import Enum
-class State(Enum):
-    TO_VISIT = 0
-    VISITING = 1
-    VISITED = 2
+
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        def build_graph():
-            graph = defaultdict(list)
-            for src, dest in prerequisites:
-                graph[src].append(dest)
-            return graph
-        def dfs(start, states):
-            # mark self as visiting
-            states[start] = State.VISITING
-            for next_vertex in graph[start]:
-                # ignore visited nodes
-                if states[next_vertex] == State.VISITED:
+        dic = defaultdict(list)
+        
+        for x,y in prerequisites:
+            dic[x].append(y)
+        
+        
+        def dfs(i):
+            state[i] = 1
+            for nexti in dic[i]:
+                if state[nexti] == 2:
                     continue
-                # revisiting a visiting node, CYCLE!
-                if states[next_vertex] == State.VISITING:
+                if state[nexti] == 1:
                     return False
-                # recursively visit neighbours
-                # if a neighbour found a cycle, we return False right away
-                if not dfs(next_vertex, states):
+                if not dfs(nexti):
                     return False
-            # mark self as visited
-            states[start] = State.VISITED
-            # if we have gotten this far, our neighbours haven't found any cycle, return True
+            state[i] = 2
             return True
-        graph = build_graph()
-        states = [State.TO_VISIT for _ in range(numCourses)]
-        # dfs on each node
+            
+        state = [0 for _ in range(numCourses)]
         for i in range(numCourses):
-            if not dfs(i, states):
+            if not dfs(i):
                 return False
         return True
         
