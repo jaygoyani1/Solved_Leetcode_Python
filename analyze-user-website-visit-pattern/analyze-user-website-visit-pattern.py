@@ -3,12 +3,23 @@ class Solution:
         
         users = collections.defaultdict(list)
         
-        for user,time,site in sorted(zip(username,timestamp,website), key = lambda x:(x[0],x[1])):
+        for user,time,site in sorted(zip(username,timestamp,website), key = lambda x:x[1]):
             users[user].append(site)
+            
+        count = collections.defaultdict(int)
+        maximum = 0
+        result = tuple()
         
-        permutations = Counter()
+        for user in users:
+            combo = combinations(users[user],3)
+            for i in set(combo):
+                count[i] += 1
+                if count[i] > maximum:
+                    maximum = count[i]
+                    result = i
+                elif count[i] == maximum:
+                    if i < result:
+                        result = i
+        return result
+                
         
-        for user,site in users.items():
-            permutations.update(Counter(set(combinations(site,3))))
-        
-        return max(sorted(permutations), key = permutations.get)
