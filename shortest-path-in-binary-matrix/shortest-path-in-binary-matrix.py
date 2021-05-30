@@ -1,27 +1,29 @@
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-        lenx, leny = len(grid), len(grid[0])
-        if grid[0][0] != 0 or grid[lenx-1][leny-1] != 0:
+        
+        if grid[0][0] == 1 or grid[-1][-1] == 1:
             return -1
-        visited = {(0,0)}
-        q = collections.deque([(0,0)])
-        dir = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) ]
-        ans = 1
-        while q:
-            n = len(q)
+        lm = len(grid)
+        ln = len(grid[0])
+        dir = [(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0)]
+        
+        queue = [(0,0)]
+        visited = set()
+        visited.add((0,0))
+        level = 0
+        while queue:
+            n = len(queue)
+            level += 1
             for _ in range(n):
-                r,c = q.popleft()
-                if (r,c) == (lenx-1,leny-1):
-                    return ans
-                for x in dir:
-                    x1 = x[0] + r
-                    y1 = x[1] + c
-                    if x1 <0 or x1>=lenx or y1<0 or y1>=leny or grid[x1][y1] == 1:
+                (i,j) = queue.pop(0)
+                if (i,j) == (lm-1,ln-1):
+                    return level
+                for x,y in dir:
+                    a = x + i
+                    b = y + j
+                    if a<0 or a >= lm or b<0 or b>=ln or grid[a][b] == 1 or (a,b) in visited:
                         continue
-                    if (x1,y1) in visited:
-                        continue
-                    visited.add((x1,y1))
-                    q.append((x1,y1))
-            ans+=1
+
+                    visited.add((a,b))
+                    queue.append((a,b))
         return -1
-                    
