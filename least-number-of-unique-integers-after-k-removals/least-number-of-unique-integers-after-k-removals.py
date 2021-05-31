@@ -1,24 +1,19 @@
 class Solution:
     def findLeastNumOfUniqueInts(self, arr: List[int], k: int) -> int:
-        dic = {}
-        diclist = []
-        count = 0
-        for i in range(len(arr)):
-            if arr[i] in dic:
-                dic[arr[i]] += 1
-            else:
-                dic[arr[i]] = 1
+        dic = collections.defaultdict(int)
+        
+        for i in arr:
+            dic[i] += 1
+        heap = []
         
         for i in dic:
-            diclist.append([dic[i],i])
-        diclist.sort()
-        n = len(diclist)
-        for i in range(n):
-            if (diclist[i][0] <= k):
-                k -= diclist[i][0]
-                count+=1
+            heapq.heappush(heap,(dic[i],i))
+        
+        while k>0:
+            val, i = heapq.heappop(heap)
+            if val <= k:
+                k-=val
             else:
-                return n-count
-        return n-count
-        
-        
+                heapq.heappush(heap,(val,i))
+                break
+        return len(heap)
