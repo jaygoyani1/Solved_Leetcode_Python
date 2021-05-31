@@ -1,34 +1,34 @@
-from collections import defaultdict
-
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        dic = defaultdict(list)
+        dic = collections.defaultdict(list)
         
-        for x,y in prerequisites:
-            dic[x].append(y)
-        
+        for pre in prerequisites:
+            dic[pre[0]].append(pre[1])
+
         
         def dfs(i):
-            state[i] = 1
-            for nexti in dic[i]:
-                if state[nexti] == 2:
+            # if i in visiting:
+            #     return False
+            visiting.add(i)
+
+            for nei in dic[i]:
+                if nei in visiting:
+                    return False
+                if nei in visited:
                     continue
-                if state[nexti] == 1:
+                if not dfs(nei):
                     return False
-                if not dfs(nexti):
-                    return False
-            state[i] = 2
+            visiting.remove(i)
+            visited.add(i)
             return True
+
             
-        state = [0 for _ in range(numCourses)]
+            
+        visiting = set()
+        visited = set()     
+        
         for i in range(numCourses):
-            if not dfs(i):
-                return False
+            if i not in visited:
+                if not dfs(i):
+                    return False     
         return True
-        
-        
-            
-            
-        
-        
-        
