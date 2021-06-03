@@ -7,15 +7,14 @@
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
         
-        def validate(node,mini,maxi):
-            if not node:
+        def helper(root,mini,maxi):
+            if not root:
                 return True
-
-            if not(mini<node.val<maxi):
+            if not(mini < root.val < maxi):
                 return False
             
-            return validate(node.left,mini,node.val) and validate(node.right,node.val,maxi)
-            
-        return validate(root,-float("inf"),float("inf"))
+            return helper(root.left,mini,root.val) and helper(root.right,root.val,maxi)
+        
+        return helper(root,-float("inf"),float("inf"))
                 
         
