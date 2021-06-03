@@ -5,7 +5,6 @@ class Solution:
         
         fresh = 0
         queue = []
-        visited = set()
         for i in range(lm):
             for j in range(ln):
                 if grid[i][j] == 1:
@@ -34,7 +33,7 @@ class Solution:
                     grid[p][q] = 2
                     queue.append((p,q))
                     fresh-=1 
-        return time if fresh == 0 else -1
+        return -1
 
             
         
