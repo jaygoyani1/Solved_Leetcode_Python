@@ -1,25 +1,24 @@
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        g = defaultdict(list)
-        n = len(points)
-        #create graph
+        def manhattan(p1,p2):
+            return abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
+        
+        n, c = len(points), collections.defaultdict(list)
         for i in range(n):
-            for j in range(n):
-                if i != j:
-                    g[i].append((abs(points[j][0]-points[i][0])+abs(points[j][1]-points[i][1]), j))
-
-        heap = [(0,0)]
-        ans = 0
-        visited = set()
+            for j in range(i+1, n):
+                d = manhattan(points[i], points[j])
+                c[i].append((d, j))
+                c[j].append((d, i))
+        
+        cnt, ans, visited, heap = 1, 0, [0] * n, c[0]
+        visited[0] = 1
+        heapq.heapify(heap)
         while heap:
-            weight, to = heapq.heappop(heap)
-            if to in visited:
-                continue
-            ans += weight
-            visited.add(to)
-
-            for cost, nei in g[to]:
-                if nei not in visited:
-                    heapq.heappush(heap, (cost, nei))
+            d, j = heapq.heappop(heap)
+            if not visited[j]:
+                visited[j], cnt, ans = 1, cnt+1, ans+d
+                for record in c[j]: 
+                    heapq.heappush(heap, record)
+            if cnt >= n: 
+                break        
         return ans
-    
