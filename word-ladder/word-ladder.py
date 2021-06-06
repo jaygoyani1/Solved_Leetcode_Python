@@ -3,34 +3,30 @@ class Solution:
         
         dic = collections.defaultdict(list)
         
-        l = len(beginWord)
-        for word in wordList:
-            
-            for i in range(l):
-                dic[word[:i]+"*"+word[i+1:]].append(word)
         
-        queue = [beginWord]
+        for  i in wordList:
+            for j in range(len(i)):
+                dic[i[:j]+"*"+i[j+1:]].append(i)
         visited = set()
+        q = [beginWord]
         total = 0
-        while queue:
-            n = len(queue)
-            total += 1
-            for _ in range(n):
-                x = queue.pop(0)
-                
-                for i in range(l):
-                    wordfind = x[:i] + "*" + x[i+1:]
-
-                    for allword in dic[wordfind]:
-                        if allword == endWord:
-                            return total + 1
-                        if allword not in visited:
-                            visited.add(allword)
-                            queue.append(allword)
-                    dic[wordfind] = []
+        while q:
+            n = len(q)
+            total +=1
+            for i in range(n):
+                wording = q.pop(0)
+                if wording == endWord:
+                    return total
+                for i in range(len(wording)):
+                    tofind = wording[:i]+"*"+wording[i+1:]
                     
-                
-                
+                    for x in dic[tofind]:
+                        if x not in visited:
+                            if x == endWord:
+                                return total+1
+                            q.append(x)
+                            visited.add(x)
+                    dic[tofind] = []
         return 0
         
                 
