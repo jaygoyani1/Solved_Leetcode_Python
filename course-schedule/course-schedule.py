@@ -7,8 +7,8 @@ class Solution:
 
         
         def dfs(i):
-            # if i in visiting:
-            #     return False
+            if i in visiting:
+                return False
             visiting.add(i)
 
             for nei in dic[i]:
