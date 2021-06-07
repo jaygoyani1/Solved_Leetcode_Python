@@ -1,4 +1,3 @@
-from random import choice
 class RandomizedSet:
 
     def __init__(self):
@@ -7,6 +6,7 @@ class RandomizedSet:
         """
         self.dic = {}
         self.list = []
+        
 
     def insert(self, val: int) -> bool:
         """
@@ -23,20 +23,19 @@ class RandomizedSet:
         """
         Removes a value from the set. Returns true if the set contained the specified element.
         """
-        if val not in self.dic:
-            return False
-        last,i = self.list[-1],self.dic[val]
-        self.list[i],self.dic[last] = last, i
-        self.list.pop()
-        del self.dic[val]
-        return True
-        
+        if val in self.dic:
+            last_val,curr_index = self.list[-1], self.dic[val]
+            self.dic[last_val] , self.list[curr_index] =  curr_index, last_val
+            self.list.pop()
+            del self.dic[val]
+            return True
+        return False
 
     def getRandom(self) -> int:
         """
         Get a random element from the set.
         """
-        return choice(self.list)
+        return random.choice(self.list)
         
 
 
